@@ -1,16 +1,21 @@
 package com.example.business.models
 
 import com.example.exceptions.*
+import kotlinx.serialization.*
 
+@Serializable
 class UserBusiness(
-    private val firstName: String,
-    private val lastName: String,
-    private val email: String,
-    private val password: String
+     val firstName: String,
+     val lastName: String,
+     val email: String,
+     val password: String
 ) {
 
+    @Contextual
     private val passwordRegex = Regex("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@#\$%^&+=])([A-Za-z\\d@#\$%^&+=]){8,32}\$")
+    @Contextual
     private val emailRegex = Regex("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}\$")
+
     /**
      * validates if first name is valid
      * @author Ömer Aynaci
@@ -24,6 +29,11 @@ class UserBusiness(
         }
     }
 
+    /**
+     * validates the last name length
+     * @author Ömer Aynaci
+     * @throws InvalidLastNameError if last name is invalid otherwise not
+     */
     fun isLastNameValid(): Boolean {
         if (lastName.length in 1..10) {
             return true
@@ -32,6 +42,11 @@ class UserBusiness(
         }
     }
 
+    /**
+     * validates if the email is valid or not
+     * @author Ömer Aynaci
+     * @throws InvalidEmailError if email is invalid otherwise not
+     */
     fun isEmailValid(): Boolean {
         if (email.matches(emailRegex)) {
             return true
@@ -40,6 +55,11 @@ class UserBusiness(
         }
     }
 
+    /**
+     * validates the password
+     * @author Ömer Aynaci
+     * @throws InvalidPasswordError if password is invalid otherwise not
+     */
     fun isPasswordValid(): Boolean {
         if (password.matches(passwordRegex)) {
             return true

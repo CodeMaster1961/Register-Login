@@ -28,13 +28,12 @@ class UserRepositoryImplementation : UserRepository {
      * registers a user
      * @author Ömer Aynaci
      */
-    override suspend fun registerUser(user: UserData): UserData = databaseQuery {
+    override suspend fun registerUser(user: UserData): Unit = databaseQuery {
         User.insert {
             it[firstName] = user.getFirstName()
             it[lastName] = user.getLastName()
             it[email] = user.getEmail()
             it[password] = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt())
         }
-        user
     }
 }

@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.ir.backend.js.*
 val ktor_version: String by project
 val kotlin_version: String by project
 val logback_version: String by project
-
+val koin_version: String by project
 val exposed_version: String by project
 val h2_version: String by project
 plugins {
@@ -37,6 +37,9 @@ dependencies {
     implementation("com.mysql:mysql-connector-j:8.3.0")
     implementation("org.mariadb.jdbc:mariadb-java-client:3.3.2")
     implementation("org.mindrot:jbcrypt:0.4")
+    implementation("io.insert-koin:koin-ktor:3.1.2")
+    implementation("io.insert-koin:koin-logger-slf4j:3.1.2")
+    implementation("io.insert-koin:koin-ktor:3.2.0")
     implementation("io.ktor:ktor-server-netty-jvm")
     implementation("ch.qos.logback:logback-classic:$logback_version")
     testImplementation("io.ktor:ktor-server-tests-jvm")

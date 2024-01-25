@@ -1,5 +1,6 @@
 package com.example.data.models
 
+import com.example.business.models.*
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -9,6 +10,8 @@ data class UserData(
     private val email: String,
     private val password: String
 ) {
+
+
     fun getFirstName(): String {
         return firstName
     }

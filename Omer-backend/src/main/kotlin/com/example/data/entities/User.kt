@@ -7,7 +7,7 @@ import org.jetbrains.exposed.sql.*
  * @author Ömer Aynaci
  */
 object User : Table() {
-    val userId = varchar("user_id", length = 128)
+    val userId = integer("user_id").autoIncrement()
     val firstName = varchar("first_name", length = 128)
     val lastName = varchar("last_name", length = 128)
     val email = varchar("email", length = 128)
