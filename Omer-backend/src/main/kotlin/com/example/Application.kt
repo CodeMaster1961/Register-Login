@@ -8,6 +8,7 @@ fun main(args: Array<String>) {
 }
 
 fun Application.module() {
+    DatabaseFactory.initializeDatabase()
     configureSerialization()
     configureHTTP()
     configureRouting()

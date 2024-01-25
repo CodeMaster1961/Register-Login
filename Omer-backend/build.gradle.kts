@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.ir.backend.js.*
+
 val ktor_version: String by project
 val kotlin_version: String by project
 val logback_version: String by project
@@ -32,6 +34,9 @@ dependencies {
     implementation("org.jetbrains.exposed:exposed-core:$exposed_version")
     implementation("org.jetbrains.exposed:exposed-jdbc:$exposed_version")
     implementation("com.h2database:h2:$h2_version")
+    implementation("com.mysql:mysql-connector-j:8.3.0")
+    implementation("org.mariadb.jdbc:mariadb-java-client:3.3.2")
+    implementation("org.mindrot:jbcrypt:0.4")
     implementation("io.ktor:ktor-server-netty-jvm")
     implementation("ch.qos.logback:logback-classic:$logback_version")
     testImplementation("io.ktor:ktor-server-tests-jvm")
