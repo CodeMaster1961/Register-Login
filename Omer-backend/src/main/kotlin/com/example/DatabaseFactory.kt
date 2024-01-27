@@ -21,7 +21,7 @@ object DatabaseFactory {
      */
     fun initializeDatabase() {
         transaction(database) {
-            SchemaUtils.create(User)
+            SchemaUtils.create(Users, Sessions)
         }
     }
 }

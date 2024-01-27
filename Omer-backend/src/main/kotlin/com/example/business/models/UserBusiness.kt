@@ -2,17 +2,19 @@ package com.example.business.models
 
 import com.example.exceptions.*
 import kotlinx.serialization.*
+import org.mindrot.jbcrypt.BCrypt
 
 @Serializable
 class UserBusiness(
-     val firstName: String,
-     val lastName: String,
-     val email: String,
-     val password: String
+    val firstName: String,
+    val lastName: String,
+    val email: String,
+    val password: String
 ) {
 
     @Contextual
     private val passwordRegex = Regex("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@#\$%^&+=])([A-Za-z\\d@#\$%^&+=]){8,32}\$")
+
     @Contextual
     private val emailRegex = Regex("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}\$")
 

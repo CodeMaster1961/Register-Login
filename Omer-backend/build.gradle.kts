@@ -35,6 +35,7 @@ dependencies {
     implementation("org.jetbrains.exposed:exposed-jdbc:$exposed_version")
     implementation("com.h2database:h2:$h2_version")
     implementation("com.mysql:mysql-connector-j:8.3.0")
+    implementation("io.ktor:ktor-server-auth:$ktor_version")
     implementation("org.mariadb.jdbc:mariadb-java-client:3.3.2")
     implementation("org.mindrot:jbcrypt:0.4")
     implementation("io.insert-koin:koin-ktor:3.1.2")
@@ -42,6 +43,7 @@ dependencies {
     implementation("io.insert-koin:koin-ktor:3.2.0")
     implementation("io.ktor:ktor-server-netty-jvm")
     implementation("ch.qos.logback:logback-classic:$logback_version")
+    implementation("io.ktor:ktor-server-auth-jvm:2.3.7")
     testImplementation("io.ktor:ktor-server-tests-jvm")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
 }

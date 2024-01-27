@@ -6,7 +6,7 @@ import org.jetbrains.exposed.sql.*
  * entity of the users
  * @author Ömer Aynaci
  */
-object User : Table() {
+object Users : Table() {
     val userId = integer("user_id").autoIncrement()
     val firstName = varchar("first_name", length = 128)
     val lastName = varchar("last_name", length = 128)
