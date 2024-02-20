@@ -6,6 +6,7 @@ import org.mindrot.jbcrypt.BCrypt
 
 @Serializable
 class UserBusiness(
+    val userId: Int,
     val firstName: String,
     val lastName: String,
     val email: String,
@@ -13,22 +14,14 @@ class UserBusiness(
 ) {
 
     @Contextual
-    private val passwordRegex = Regex("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@#\$%^&+=])([A-Za-z\\d@#\$%^&+=]){8,32}\$")
-
-    @Contextual
-    private val emailRegex = Regex("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}\$")
+    private val credentialsValidator = CredentialsValidator()
 
     /**
      * validates if first name is valid
      * @author Ömer Aynaci
-     * @throws InvalidFirstNameError if first name is invalid throw not error
      */
     fun isFirstNameValid(): Boolean {
-        if (firstName.length in 1..10) {
-            return true
-        } else {
-            throw InvalidFirstNameError("First name is invalid")
-        }
+        return credentialsValidator.isFirstNameValid(firstName)
     }
 
     /**
@@ -37,11 +30,7 @@ class UserBusiness(
      * @throws InvalidLastNameError if last name is invalid otherwise not
      */
     fun isLastNameValid(): Boolean {
-        if (lastName.length in 1..10) {
-            return true
-        } else {
-            throw InvalidLastNameError("Last name is invalid")
-        }
+       return credentialsValidator.isLastNameValid(lastName)
     }
 
     /**
@@ -50,11 +39,7 @@ class UserBusiness(
      * @throws InvalidEmailError if email is invalid otherwise not
      */
     fun isEmailValid(): Boolean {
-        if (email.matches(emailRegex)) {
-            return true
-        } else {
-            throw InvalidEmailError("The given email is invalid")
-        }
+        return credentialsValidator.isEmailValid(email)
     }
 
     /**
@@ -63,10 +48,6 @@ class UserBusiness(
      * @throws InvalidPasswordError if password is invalid otherwise not
      */
     fun isPasswordValid(): Boolean {
-        if (password.matches(passwordRegex)) {
-            return true
-        } else {
-            throw InvalidPasswordError("The given password is invalid")
-        }
+        return credentialsValidator.isPasswordValid(password)
     }
 }

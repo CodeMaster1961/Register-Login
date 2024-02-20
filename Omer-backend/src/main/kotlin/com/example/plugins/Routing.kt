@@ -16,10 +16,25 @@ import org.koin.ktor.ext.*
  */
 fun Application.configureRouting() {
     val userService by inject<UserService>()
+    val gameService by inject<GameService>()
+    val shopItemService by inject<ShopItemService>()
+    val achievementService by inject<AchievementService>()
+    val achievementController = AchievementController(achievementService)
+    val shopItemController = ShopItemController(shopItemService)
+    val gameController = GameController(gameService)
     val userController = UserController(userService)
-    Security().apply { authenticateUser() }
+    Security().apply {
+        authenticateUser()
+//        authenticateUserBasic()
+    }
     routing {
         UserRoutes(userController).createUser(this)
         UserRoutes(userController).login(this)
+        UserRoutes(userController).getAuthenticatedUser(this)
+        UserRoutes(userController).getUsers(this)
+        GameRoutes(gameController).getAllGames(this)
+        GameRoutes(gameController).getGameById(this)
+        ShopItemRoutes(shopItemController).getAllShopItems(this)
+        AchievementRoutes(achievementController).getAllAchievements(this)
     }
 }

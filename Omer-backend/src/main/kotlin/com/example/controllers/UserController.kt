@@ -2,6 +2,7 @@ package com.example.controllers
 
 import com.example.business.models.*
 import com.example.business.service.*
+import com.example.data.models.*
 import com.example.exceptions.*
 import io.ktor.http.*
 import io.ktor.server.request.*
@@ -28,6 +29,15 @@ class UserController(private val userService: UserService) {
             response.call.respond(HttpStatusCode.BadRequest, InvalidEmailError(error.message!!))
         } catch (error: InvalidPasswordError) {
             response.call.respond(HttpStatusCode.BadRequest, InvalidPasswordError(error.message!!))
+        }
+    }
+
+    suspend fun getAllUsers(request: ApplicationRequest, response: ApplicationResponse) {
+        try {
+            val getUsers = userService.getAllUsers()
+            response.call.respond(HttpStatusCode.OK, getUsers)
+        } catch (error: IllegalArgumentException) {
+            response.call.respond(HttpStatusCode.BadRequest, error.message!!)
         }
     }
 }

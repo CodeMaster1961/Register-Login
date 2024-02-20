@@ -1,6 +1,7 @@
 package com.example.data.repositoryImplementations
 
 import com.example.*
+import com.example.authentication.*
 import com.example.data.entities.*
 import com.example.data.models.*
 import com.example.data.repositories.*
@@ -17,10 +18,11 @@ class UserRepositoryImplementation : UserRepository {
 
     private fun resultToRowUser(row: ResultRow): UserData {
         return UserData(
+            userId = row[Users.userId],
             firstName = row[Users.firstName],
             lastName = row[Users.lastName],
             email = row[Users.email],
-            password = row[Users.password]
+            hashedPassword = row[Users.password]
         )
     }
 
@@ -33,8 +35,22 @@ class UserRepositoryImplementation : UserRepository {
             it[firstName] = user.getFirstName()
             it[lastName] = user.getLastName()
             it[email] = user.getEmail()
-            it[password] = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt())
+            it[password] = BCrypt.hashpw(user.getHashedPassword(), BCrypt.gensalt())
         }
+    }
+
+    override suspend fun getAllUsers(): List<UserData> = databaseQuery {
+        Users.selectAll().map(::resultToRowUser)
+    }
+
+    suspend fun getFirstNameByEmail(email: String?): String = databaseQuery {
+        if (email != null) {
+            val result = Users.select { Users.email eq email }.singleOrNull()
+            result?.let {
+                return@databaseQuery result[Users.firstName]
+            }
+        }
+        ""
     }
 
     suspend fun doesEmailExists(email: String?): Boolean = databaseQuery {
@@ -42,7 +58,7 @@ class UserRepositoryImplementation : UserRepository {
             val result = Users.select { Users.email eq email }.singleOrNull()
             result != null
         } else {
-            throw IllegalArgumentException("Email doesn't exists")
+            return@databaseQuery false
         }
     }
 
@@ -55,14 +71,14 @@ class UserRepositoryImplementation : UserRepository {
         }
     }
 
-    suspend fun getUserPasswordByEmail(email: String) = databaseQuery {
+    suspend fun getUserIdByEmail(email: String): Pair<String,Int>? = databaseQuery {
         val existingUser = Users.select { Users.email eq email }
             .map(::resultToRowUser)
             .singleOrNull()
-        if (existingUser != null) {
-            return@databaseQuery existingUser.getPassword()
-        } else {
+        if (existingUser == null) {
             return@databaseQuery null
+        } else {
+            return@databaseQuery Pair<String,Int>(existingUser.getHashedPassword(),existingUser.getUserId())
         }
     }
 }

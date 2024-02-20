@@ -5,12 +5,16 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class UserData(
+    private val userId: Int,
     private val firstName: String,
     private val lastName: String,
     private val email: String,
-    private val password: String
+    private var hashedPassword: String
 ) {
 
+    fun getUserId(): Int {
+        return userId
+    }
 
     /**
      * Gets the first name property
@@ -44,7 +48,7 @@ data class UserData(
      * @author Ömer Aynaci
      * @return the password string
      */
-    fun getPassword(): String {
-        return password
+    fun getHashedPassword(): String {
+        return this.hashedPassword
     }
 }

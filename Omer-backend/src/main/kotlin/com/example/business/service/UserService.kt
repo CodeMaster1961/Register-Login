@@ -26,7 +26,10 @@ class UserService(private val userRepository: UserRepository) {
      * @author Ömer Aynaci
      */
     private fun UserBusiness.toUserData(): UserData {
-        return UserData(firstName, lastName, email, password)
+        return UserData(userId,firstName, lastName, email, password)
     }
 
+    suspend fun getAllUsers(): List<UserData> {
+        return userRepository.getAllUsers()
+    }
 }

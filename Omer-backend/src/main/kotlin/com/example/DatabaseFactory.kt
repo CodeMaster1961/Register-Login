@@ -21,7 +21,7 @@ object DatabaseFactory {
      */
     fun initializeDatabase() {
         transaction(database) {
-            SchemaUtils.create(Users)
+            SchemaUtils.create(Users, Game, ClickShopItem, Achievements)
         }
     }
 }
